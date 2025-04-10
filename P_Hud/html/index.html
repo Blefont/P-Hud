@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astinia RP HUD</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            font-family: 'Roboto', sans-serif;
+            pointer-events: none; 
+        }
+
+        .hud-container {
+            position: absolute;
+            top: 10px;
+            right: 10px; 
+            padding: 6px 12px; 
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 8px; 
+            color: #8A2BE2; 
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .hud-container img {
+            width: 30px;
+            height: 30px;
+            margin-left: 6px;
+        }
+
+        .street-container {
+            position: absolute;
+            top: 840px; 
+            left: 6.9%; 
+            transform: translateX(-50%); 
+            padding: 6px 12px; 
+            background: rgba(0, 0, 0, 0.7); 
+            border-radius: 3px; 
+            color: #8A2BE2; 
+            font-size: 20px; 
+            font-weight: bold;
+            display: flex;
+            justify-content: center; 
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="hud-container" id="hud">
+        <span>Astinia RP</span>
+        <img src="logo.png" alt="Logo">
+    </div>
+
+    <div class="street-container" id="street-name">
+        <span id="streetText">Chargement...</span>
+    </div>
+
+    <script>
+        window.addEventListener('message', function(event) {
+            if (event.data.action === 'show') {
+                document.getElementById('hud').style.display = 'block';
+                document.getElementById('street-name').style.display = 'block';
+            }
+            if (event.data.action === 'hide') {
+                document.getElementById('hud').style.display = 'none';
+                document.getElementById('street-name').style.display = 'none';
+            }
+
+            if (event.data.action === 'updateStreetName') {
+                setStreetName(event.data.street); 
+            }
+        });
+
+        function setStreetName(street) {
+            document.getElementById('streetText').textContent = street;
+        }
+    </script>
+</body>
+</html>
